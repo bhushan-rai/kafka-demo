@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: new-ingress-service
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx  
+  rules:
+    - host: kafkarct.dev
+      http:
+        paths:
+          - path: /api/add/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: stockadd-srv
+                port:
+                  number: 3000
+          - path: /api/get/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: stockget-srv
+                port:
+                  number: 3000
+          - path: /?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: clnt-srv
+                port:
+                  number: 3000

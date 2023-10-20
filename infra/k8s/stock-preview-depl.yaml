@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clnt-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clnt
+  template:
+    metadata:
+      labels:
+        app: clnt
+    spec:
+      containers:
+        - name: clnt
+          image: bhushanrai/rct-clnt
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clnt-srv
+spec:
+  selector:
+    app: clnt
+  ports:
+    - name: clnt
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

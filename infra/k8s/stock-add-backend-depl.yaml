@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stockadd-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stockadd
+  template:
+    metadata:
+      labels:
+        app: stockadd
+    spec:
+      containers:
+        - name: stockadd
+          image: bhushanrai/stockadd
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stockadd-srv
+spec:
+  selector:
+    app: stockadd
+  ports:
+    - name: stockadd
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

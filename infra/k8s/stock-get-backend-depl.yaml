@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stockget-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stockget
+  template:
+    metadata:
+      labels:
+        app: stockget
+    spec:
+      containers:
+        - name: stockget
+          image: bhushanrai/stockget
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stockget-srv
+spec:
+  selector:
+    app: stockget
+  ports:
+    - name: stockget
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
